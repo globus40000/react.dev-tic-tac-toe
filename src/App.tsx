@@ -1,7 +1,11 @@
 import type { FC } from "react";
 
-const App: FC = () => {
-  return <div>App</div>;
+const Square: FC = () => {
+  return (
+    <button type="button" className="square">
+      X
+    </button>
+  );
 };
 
-export default App;
+export default Square;
