@@ -16,16 +16,22 @@ const Square: FC<ISquareProps> = ({ value, onClick }) => {
 };
 
 const Board: FC = () => {
+  const [xIsNext, setXIsNext] = useState(true);
   const [squares, setSquares] = useState<Value[]>(() =>
     Array<Value>(9).fill(null),
   );
 
   const handleClick = (i: number) => {
+    if (squares[i]) {
+      return;
+    }
+
     const nextSquares = squares.slice();
 
-    nextSquares[i] = "X";
+    nextSquares[i] = xIsNext ? "X" : "O";
 
     setSquares(nextSquares);
+    setXIsNext(!xIsNext);
   };
 
   return (
