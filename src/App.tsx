@@ -2,6 +2,27 @@ import { useState, type FC, type MouseEventHandler } from "react";
 
 type Value = "X" | "O" | null;
 
+const calculateWinner = (squares: Value[]) => {
+  const lines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+
+  for (const [a, b, c] of lines) {
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return squares[a];
+    }
+  }
+
+  return null;
+};
+
 interface ISquareProps {
   value: Value;
   onClick: MouseEventHandler;
@@ -22,7 +43,7 @@ const Board: FC = () => {
   );
 
   const handleClick = (i: number) => {
-    if (squares[i]) {
+    if (squares[i] || calculateWinner(squares)) {
       return;
     }
 
@@ -34,8 +55,13 @@ const Board: FC = () => {
     setXIsNext(!xIsNext);
   };
 
+  const winner = calculateWinner(squares);
+
   return (
     <>
+      <div className="status">
+        {winner ? `Winner: ${winner}` : `Next player: ${xIsNext ? "X" : "O"}`}
+      </div>
       <div className="board-row">
         <Square
           value={squares[0]}
