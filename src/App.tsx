@@ -36,12 +36,13 @@ const Square: FC<ISquareProps> = ({ value, onClick }) => {
   );
 };
 
-const Board: FC = () => {
-  const [xIsNext, setXIsNext] = useState(true);
-  const [squares, setSquares] = useState<Value[]>(() =>
-    Array<Value>(9).fill(null),
-  );
+interface IBoardProps {
+  xIsNext: boolean;
+  squares: Value[];
+  onPlay: (squares: Value[]) => void;
+}
 
+const Board: FC<IBoardProps> = ({ xIsNext, squares, onPlay }) => {
   const handleClick = (i: number) => {
     if (squares[i] || calculateWinner(squares)) {
       return;
@@ -51,8 +52,7 @@ const Board: FC = () => {
 
     nextSquares[i] = xIsNext ? "X" : "O";
 
-    setSquares(nextSquares);
-    setXIsNext(!xIsNext);
+    onPlay(nextSquares);
   };
 
   const winner = calculateWinner(squares);
@@ -126,4 +126,28 @@ const Board: FC = () => {
   );
 };
 
-export default Board;
+const Game: FC = () => {
+  const [xIsNext, setXIsNext] = useState(true);
+  const [history, setHistory] = useState<Value[][]>(() => [
+    Array<Value>(9).fill(null),
+  ]);
+  const currentSquares = history[history.length - 1];
+
+  const handlePlay = (nextSquares: Value[]) => {
+    setHistory([...history, nextSquares]);
+    setXIsNext(!xIsNext);
+  };
+
+  return (
+    <div className="game">
+      <div className="game-board">
+        <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
+      </div>
+      <div className="game-info">
+        <ol>{/* TODO */}</ol>
+      </div>
+    </div>
+  );
+};
+
+export default Game;
