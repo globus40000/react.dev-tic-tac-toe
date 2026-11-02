@@ -138,13 +138,40 @@ const Game: FC = () => {
     setXIsNext(!xIsNext);
   };
 
+  const jumpTo = (nextMove: number) => {
+    // @todo
+  };
+
+  const moves = history.map((_squares, move) => {
+    let description;
+
+    if (move > 0) {
+      description = `Go to move #${String(move)}`;
+    } else {
+      description = "Go to game start";
+    }
+
+    return (
+      <li>
+        <button
+          type="button"
+          onClick={() => {
+            jumpTo(move);
+          }}
+        >
+          {description}
+        </button>
+      </li>
+    );
+  });
+
   return (
     <div className="game">
       <div className="game-board">
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
       <div className="game-info">
-        <ol>{/* TODO */}</ol>
+        <ol>{moves}</ol>
       </div>
     </div>
   );
