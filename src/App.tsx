@@ -152,7 +152,7 @@ const Game: FC = () => {
     }
 
     return (
-      <li>
+      <li key={description}>
         <button
           type="button"
           onClick={() => {
