@@ -127,11 +127,11 @@ const Board: FC<IBoardProps> = ({ xIsNext, squares, onPlay }) => {
 };
 
 const Game: FC = () => {
-  const [xIsNext, setXIsNext] = useState(true);
   const [history, setHistory] = useState<Value[][]>(() => [
     Array<Value>(9).fill(null),
   ]);
   const [currentMove, setCurrentMove] = useState(0);
+  const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
 
   const handlePlay = (nextSquares: Value[]) => {
@@ -139,12 +139,10 @@ const Game: FC = () => {
 
     setHistory(nextHistory);
     setCurrentMove(nextHistory.length - 1);
-    setXIsNext(!xIsNext);
   };
 
   const jumpTo = (nextMove: number) => {
     setCurrentMove(nextMove);
-    setXIsNext(nextMove % 2 === 0);
   };
 
   const moves = history.map((_squares, move) => {
