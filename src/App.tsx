@@ -156,14 +156,18 @@ const Game: FC = () => {
 
     return (
       <li key={description}>
-        <button
-          type="button"
-          onClick={() => {
-            jumpTo(move);
-          }}
-        >
-          {description}
-        </button>
+        {move === currentMove ? (
+          `You are at move #${String(move)}`
+        ) : (
+          <button
+            type="button"
+            onClick={() => {
+              jumpTo(move);
+            }}
+          >
+            {description}
+          </button>
+        )}
       </li>
     );
   });
