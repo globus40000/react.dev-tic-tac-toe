@@ -146,18 +146,21 @@ const Game: FC = () => {
   };
 
   const moves = history.map((_squares, move) => {
+    const isCurrentMove = move === currentMove;
     let description;
 
-    if (move > 0) {
-      description = `Go to move #${String(move)}`;
+    if (isCurrentMove) {
+      description =
+        move > 0 ? `You are at move #${String(move)}` : "You are at game start";
     } else {
-      description = "Go to game start";
+      description =
+        move > 0 ? `Go to move #${String(move)}` : "Go to game start";
     }
 
     return (
       <li key={description}>
-        {move === currentMove ? (
-          `You are at move #${String(move)}`
+        {isCurrentMove ? (
+          description
         ) : (
           <button
             type="button"
