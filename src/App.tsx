@@ -59,6 +59,7 @@ const Board: FC<IBoardProps> = ({ xIsNext, squares, onPlay }) => {
 
   const rows = [0, 1, 2];
   const columns = [0, 1, 2];
+  const getSquareId = (rowId: number, columnId: number) => rowId * 3 + columnId;
 
   return (
     <>
@@ -69,11 +70,11 @@ const Board: FC<IBoardProps> = ({ xIsNext, squares, onPlay }) => {
         <div className="board-row" key={rowId}>
           {columns.map((columnId) => (
             <Square
-              value={squares[rowId * 3 + columnId]}
+              value={squares[getSquareId(rowId, columnId)]}
               onClick={() => {
-                handleClick(rowId * 3 + columnId);
+                handleClick(getSquareId(rowId, columnId));
               }}
-              key={rowId * 3 + columnId}
+              key={getSquareId(rowId, columnId)}
             />
           ))}
         </div>
