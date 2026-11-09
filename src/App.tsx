@@ -148,7 +148,7 @@ const Game: FC = () => {
           <input
             type="checkbox"
             onChange={() => {
-              setIsReversed(!isReversed);
+              setIsReversed((prev) => !prev);
             }}
           />
           Reversed moves
