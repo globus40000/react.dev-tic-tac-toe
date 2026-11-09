@@ -144,14 +144,15 @@ const Game: FC = () => {
       </div>
       <div className="game-info">
         <ol reversed={isReversed}>{moves}</ol>
-        <button
-          type="button"
-          onClick={() => {
-            setIsReversed(!isReversed);
-          }}
-        >
-          Reverse moves
-        </button>
+        <label>
+          <input
+            type="checkbox"
+            onChange={() => {
+              setIsReversed(!isReversed);
+            }}
+          />
+          Reversed moves
+        </label>
       </div>
     </div>
   );
