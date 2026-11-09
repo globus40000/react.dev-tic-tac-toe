@@ -90,6 +90,7 @@ const Game: FC = () => {
   const [currentMove, setCurrentMove] = useState(0);
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
+  const [isReversed, setIsReversed] = useState(false);
 
   const handlePlay = (nextSquares: Value[]) => {
     const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
@@ -132,13 +133,25 @@ const Game: FC = () => {
     );
   });
 
+  if (isReversed) {
+    moves.reverse();
+  }
+
   return (
     <div className="game">
       <div className="game-board">
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
       <div className="game-info">
-        <ol>{moves}</ol>
+        <ol reversed={isReversed}>{moves}</ol>
+        <button
+          type="button"
+          onClick={() => {
+            setIsReversed(!isReversed);
+          }}
+        >
+          Reverse moves
+        </button>
       </div>
     </div>
   );
