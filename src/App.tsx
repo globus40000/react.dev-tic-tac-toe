@@ -116,7 +116,7 @@ const Game: FC = () => {
     }
 
     return (
-      <li key={description}>
+      <li key={`move-${String(move)}`}>
         {isCurrentMove ? (
           description
         ) : (
