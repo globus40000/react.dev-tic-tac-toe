@@ -150,6 +150,7 @@ const Game: FC = () => {
             onChange={() => {
               setIsReversed((prev) => !prev);
             }}
+            checked={isReversed}
           />
           Reversed moves
         </label>
