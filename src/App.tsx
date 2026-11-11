@@ -25,7 +25,7 @@ const calculateWinner = (squares: Value[]) => {
 
 interface ISquareProps {
   value: Value;
-  onClick: MouseEventHandler;
+  onClick: MouseEventHandler<HTMLButtonElement>;
 }
 
 const Square: FC<ISquareProps> = ({ value, onClick }) => {
