@@ -43,8 +43,10 @@ interface IBoardProps {
 }
 
 const Board: FC<IBoardProps> = ({ xIsNext, squares, onPlay }) => {
+  const winner = calculateWinner(squares);
+
   const handleClick = (i: number) => {
-    if (squares[i] || calculateWinner(squares)) {
+    if (squares[i] || winner) {
       return;
     }
 
@@ -54,8 +56,6 @@ const Board: FC<IBoardProps> = ({ xIsNext, squares, onPlay }) => {
 
     onPlay(nextSquares);
   };
-
-  const winner = calculateWinner(squares);
 
   const rows = [0, 1, 2];
   const columns = [0, 1, 2];
