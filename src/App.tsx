@@ -17,11 +17,11 @@ const calculateWinner = (squares: Value[]) => {
 
   for (const [a, b, c] of lines) {
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
+      return { winner: squares[a], line: [a, b, c] };
     }
   }
 
-  return null;
+  return { winner: null, line: null };
 };
 
 interface ISquareProps {
@@ -53,7 +53,7 @@ interface IBoardProps {
 }
 
 const Board: FC<IBoardProps> = ({ xIsNext, squares, onPlay }) => {
-  const winner = calculateWinner(squares);
+  const { winner, line } = calculateWinner(squares);
 
   const handleClick = (i: number) => {
     if (squares[i] || winner) {
@@ -70,6 +70,9 @@ const Board: FC<IBoardProps> = ({ xIsNext, squares, onPlay }) => {
   const rows = [0, 1, 2];
   const columns = [0, 1, 2];
   const getSquareId = (rowId: number, columnId: number) => rowId * 3 + columnId;
+  const getIsHighlighted = (squareId: number) => {
+    return Boolean(line?.includes(squareId));
+  };
 
   return (
     <>
@@ -80,6 +83,7 @@ const Board: FC<IBoardProps> = ({ xIsNext, squares, onPlay }) => {
         <div className="board-row" key={rowId}>
           {columns.map((columnId) => {
             const squareId = getSquareId(rowId, columnId);
+            const isHighlighted = getIsHighlighted(squareId);
 
             return (
               <Square
@@ -87,6 +91,7 @@ const Board: FC<IBoardProps> = ({ xIsNext, squares, onPlay }) => {
                 onClick={() => {
                   handleClick(squareId);
                 }}
+                isHighlighted={isHighlighted}
                 key={squareId}
               />
             );
