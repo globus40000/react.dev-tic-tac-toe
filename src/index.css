@@ -71,6 +71,10 @@ body {
   width: 34px;
 }
 
+.square_highlighted {
+  background-color: aquamarine;
+}
+
 .board-row:after {
   clear: both;
   content: "";

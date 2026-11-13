@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { useState, type FC, type MouseEventHandler } from "react";
 
 type Value = "X" | "O" | null;
@@ -26,11 +27,20 @@ const calculateWinner = (squares: Value[]) => {
 interface ISquareProps {
   value: Value;
   onClick: MouseEventHandler<HTMLButtonElement>;
+  isHighlighted?: boolean;
 }
 
-const Square: FC<ISquareProps> = ({ value, onClick }) => {
+const Square: FC<ISquareProps> = ({
+  value,
+  onClick,
+  isHighlighted = false,
+}) => {
   return (
-    <button type="button" className="square" onClick={onClick}>
+    <button
+      type="button"
+      className={clsx("square", isHighlighted && "square_highlighted")}
+      onClick={onClick}
+    >
       {value}
     </button>
   );
