@@ -74,11 +74,19 @@ const Board: FC<IBoardProps> = ({ xIsNext, squares, onPlay }) => {
     return Boolean(line?.includes(squareId));
   };
 
+  const isFinish = squares.every((square) => square !== null);
+
+  let status = `Next player: ${xIsNext ? "X" : "O"}`;
+
+  if (winner) {
+    status = `Winner: ${winner}`;
+  } else if (isFinish) {
+    status = "Game ended in a draw";
+  }
+
   return (
     <>
-      <div className="status">
-        {winner ? `Winner: ${winner}` : `Next player: ${xIsNext ? "X" : "O"}`}
-      </div>
+      <div className="status">{status}</div>
       {rows.map((rowId) => (
         <div className="board-row" key={rowId}>
           {columns.map((columnId) => {
