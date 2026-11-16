@@ -130,16 +130,41 @@ const Game: FC = () => {
     setCurrentMove(nextMove);
   };
 
-  const moves = history.map((_squares, move) => {
+  const moves = history.map((squares, move) => {
     const isCurrentMove = move === currentMove;
+
+    let moveLocation = "(row, col)";
+
+    if (move > 0) {
+      const prevSquares = history[move - 1];
+
+      let squareId = 0;
+
+      for (let i = 0; i < squares.length; i++) {
+        if (squares[i] && !prevSquares[i]) {
+          squareId = i;
+          break;
+        }
+      }
+
+      const col = squareId % 3;
+      const row = Math.floor(squareId / 3);
+
+      moveLocation = `(${String(row)}, ${String(col)})`;
+    }
+
     let description;
 
     if (isCurrentMove) {
       description =
-        move > 0 ? `You are at move #${String(move)}` : "You are at game start";
+        move > 0
+          ? `You are at move #${String(move)} ${moveLocation}`
+          : "You are at game start";
     } else {
       description =
-        move > 0 ? `Go to move #${String(move)}` : "Go to game start";
+        move > 0
+          ? `Go to move #${String(move)} ${moveLocation}`
+          : "Go to game start";
     }
 
     return (
