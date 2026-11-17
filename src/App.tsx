@@ -4,7 +4,7 @@ import { useState, type FC, type MouseEventHandler } from "react";
 type Value = "X" | "O" | null;
 
 const calculateWinner = (squares: Value[]) => {
-  const lines = [
+  const lines: [number, number, number][] = [
     [0, 1, 2],
     [3, 4, 5],
     [6, 7, 8],
@@ -95,7 +95,7 @@ const Board: FC<IBoardProps> = ({ xIsNext, squares, onPlay }) => {
 
             return (
               <Square
-                value={squares[squareId]}
+                value={squares[squareId] ?? null}
                 onClick={() => {
                   handleClick(squareId);
                 }}
@@ -141,7 +141,7 @@ const Game: FC = () => {
       let squareId = 0;
 
       for (let i = 0; i < squares.length; i++) {
-        if (squares[i] && !prevSquares[i]) {
+        if (squares[i] && !prevSquares?.[i]) {
           squareId = i;
           break;
         }
@@ -192,7 +192,13 @@ const Game: FC = () => {
   return (
     <div className="game">
       <div className="game-board">
-        <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
+        {currentSquares && (
+          <Board
+            xIsNext={xIsNext}
+            squares={currentSquares}
+            onPlay={handlePlay}
+          />
+        )}
       </div>
       <div className="game-info">
         <ol reversed={isReversed}>{moves}</ol>
